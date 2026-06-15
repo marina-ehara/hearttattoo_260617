@@ -54,6 +54,11 @@
             display: block;
         }
 
+        .grid-container.is-show .grid-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* 各画像が表示されるタイミングをずらす設定（ディレイ） */
         .grid-item:nth-child(1) { animation-delay: 0.1s; }
         .grid-item:nth-child(2) { animation-delay: 0.3s; }
@@ -65,33 +70,24 @@
         .grid-item:nth-child(8) { animation-delay: 1.5s; }
         .grid-item:nth-child(9) { animation-delay: 1.7s; }
 
-        /* フワッと上がって表示されるアニメーションの中身 */
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+　　　　/* 画像自体の設定 */
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;                    /* 枠線に合わせて綺麗にトリミング */
+            display: block;
+        }
+        
+        /* 既存の他の画像の設定（幅を100%に均一化） */
+        .wd1080 img {
+            width: 100%;
+            display: block;
         }
         
     </style>
 </head>
 <body>
 
-    <p id="target-text" class="text">大きくなるテキスト</p>
-    <button onclick="zoomText()">ここをクリック！</button>
-
-    <script>
-        function zoomText() {
-            const text = document.getElementById('target-text');
-            // 文字サイズを40pxに変更
-            text.style.fontSize = '40px';
-            text.style.color = '#1e90ff';
-        }
-    </script>
 <ul class="wd1080" style="position:relative;">
 <li class="wd1080" style="position:relative;">
 <img src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
