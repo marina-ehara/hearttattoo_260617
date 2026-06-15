@@ -18,6 +18,11 @@
             font-family: sans-serif;
         }
 
+        .wd1080{
+            width:100%;
+        }
+        
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 横に3個均等に並べる */
@@ -26,6 +31,12 @@
             width: 100%;
             padding: 20px;
         }
+
+        /* 画像を囲む枠の設定 */
+        .grid-item {
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #ddd;               /* 画像が読み込まれる前の背景色 */
             
             /* アニメーションの初期状態（透明で、少し下にある） */
             opacity: 0;
@@ -81,10 +92,10 @@
             text.style.color = '#1e90ff';
         }
     </script>
-<ul class="mgb100_ wd1100_" style="position:relative;">
-<li class="wd1100_ " style="position:relative;">
-<img class="wow fadeInDownsmall z-index10_ mgt40_ top_" data-wow-duration="1s" data-wow-delay=".5s" src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img class="wow fadeInDownsmall z-index10_ mgt40_" data-wow-duration="1s" data-wow-delay=".5s" src="HT_260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+<ul class="wd1080" style="position:relative;">
+<li class="wd1080" style="position:relative;">
+<img src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+<img src="HT_260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
 </li>
 </ul>
 
