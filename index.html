@@ -20,9 +20,11 @@
 
         .wd1080{
             width:100%;
+            max-width: 1080px;
+            padding: 0;
+            list-style: none; /* リストの黒点を消す */
         }
         
-
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 横に3個均等に並べる */
@@ -30,47 +32,47 @@
             max-width: 1080px;                     /* 全体の最大幅 */
             width: 100%;
             padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* 画像を囲む枠の設定 */
+        /* 画像を囲む枠の設定（初期状態：透明で少し下にある） */
         .grid-item {
             overflow: hidden;
             border-radius: 8px;
-            background-color: #ddd;               /* 画像が読み込まれる前の背景色 */
-            
-            /* アニメーションの初期状態（透明で、少し下にある） */
+            background-color: #eee;               /* 画像が読み込まれる前の背景色 */
             opacity: 0;
-            transform: translateY(20px);
-            
-            /* アニメーションの指定（名前、時間、なめらかさ、終了時の状態をキープ） */
+            transform: translateY(30px);
+        }
+
+        /* 💡 画面に入って「is-show」がついたらアニメーションを開始させる */
+        .grid-container.is-show .grid-item {
             animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* 画像自体の設定 */
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;                    /* 枠線に合わせて綺麗にトリミング */
-            display: block;
-        }
-
-        .grid-container.is-show .grid-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* 各画像が表示されるタイミングをずらす設定（ディレイ） */
-        .grid-item:nth-child(1) { animation-delay: 0.1s; }
-        .grid-item:nth-child(2) { animation-delay: 0.3s; }
-        .grid-item:nth-child(3) { animation-delay: 0.5s; }
-        .grid-item:nth-child(4) { animation-delay: 0.7s; }
-        .grid-item:nth-child(5) { animation-delay: 0.9s; }
-        .grid-item:nth-child(6) { animation-delay: 1.1s; }
-        .grid-item:nth-child(7) { animation-delay: 1.3s; }
-        .grid-item:nth-child(8) { animation-delay: 1.5s; }
-        .grid-item:nth-child(9) { animation-delay: 1.7s; }
+        .grid-container.is-show .grid-item:nth-child(1) { animation-delay: 0.1s; }
+        .grid-container.is-show .grid-item:nth-child(2) { animation-delay: 0.2s; }
+        .grid-container.is-show .grid-item:nth-child(3) { animation-delay: 0.3s; }
+        .grid-container.is-show .grid-item:nth-child(4) { animation-delay: 0.4s; }
+        .grid-container.is-show .grid-item:nth-child(5) { animation-delay: 0.5s; }
+        .grid-container.is-show .grid-item:nth-child(6) { animation-delay: 0.6s; }
+        .grid-container.is-show .grid-item:nth-child(7) { animation-delay: 0.7s; }
+        .grid-container.is-show .grid-item:nth-child(8) { animation-delay: 0.8s; }
+        .grid-container.is-show .grid-item:nth-child(9) { animation-delay: 0.9s; }
 
-　　　　/* 画像自体の設定 */
+        /* フワッと上がって表示されるアニメーションの定義 */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 画像自体の設定 */
         .grid-item img {
             width: 100%;
             height: 100%;
@@ -89,40 +91,59 @@
 <body>
 
 <ul class="wd1080" style="position:relative;">
-<li class="wd1080" style="position:relative;">
-<img src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-</li>
+    <li class="wd1080" style="position:relative;">
+        <img src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+    </li>
 
+    <li>
+        <div class="grid-container" id="scroll-grid">
+            <div class="grid-item"><img src="HT_260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_05.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_06.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_07.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_08.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item"><img src="HT_260617_3_09.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+        </div>
+    </li>
 
-    <div class="grid-container">
-        <div class="grid-item"><img src="HT_260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_05.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_06.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_07.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_08.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-        <div class="grid-item"><img src="HT_260617_3_09.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-    </div>
-
-<li class="wd1080" style="position:relative;">
-<img src="HT_260617_４.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">    
-<img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">   
-<img src="HT_260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">    
-<img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
-<img src="HT_260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">    
-    
-    
-</li>    
+    <li class="wd1080" style="position:relative;">
+        <img src="HT_260617_４.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">    
+        <img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">   
+        <img src="HT_260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">     
+        <img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">
+        <img src="HT_260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;">    
+    </li>   
 </ul>
+
+<script>
+    const gridContainer = document.getElementById('scroll-grid');
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1 /* 3x3エリアが10%見えたら動き出す設定 */
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                gridContainer.classList.add('is-show');
+                observer.unobserve(entry.target); // 1回動いたら監視を終了
+            }
+        });
+    }, options);
+
+    observer.observe(gridContainer);
+</script>
     
 </body>
 </html>
