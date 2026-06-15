@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScriptアニメーションの例</title>
+    <style>
+        .text {
+            font-size: 20px;
+            transition: all 0.5s; /* 変化をなめらかにする設定 */
+        }
+    </style>
+</head>
+<body>
+
+    <p id="target-text" class="text">大きくなるテキスト</p>
+    <button onclick="zoomText()">ここをクリック！</button>
+
+    <script>
+        function zoomText() {
+            const text = document.getElementById('target-text');
+            // 文字サイズを40pxに変更
+            text.style.fontSize = '40px';
+            text.style.color = '#1e90ff';
+        }
+    </script>
+
+</body>
+</html>
