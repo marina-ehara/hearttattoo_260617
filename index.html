@@ -1,258 +1,477 @@
 <!DOCTYPE html>
+
 <html lang="ja">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>HeartTattoo meets 瀬川陽菜乃</title>
+
     <style>
-        /* 💡 追加：ページ内のスクロールをすべて柔らかく（スムーズに）する設定 */
-        html {
-            scroll-behavior: smooth;
-        }
 
         .text {
+
             font-size: 20px;
+
             transition: all 0.5s; /* 変化をなめらかにする設定 */
+
         }
+
         body {
+
             background-color: #fff;
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             min-height: 100vh;
+
             margin: 0;
+
             font-family: sans-serif;
+
         }
+
+
 
         .wd1080{
+
             width:100%;
+
             max-width: 1080px;
+
             padding: 0;
+
             list-style: none; /* リストの黒点を消す */
+
         }
+
         
+
         .grid-container {
+
             display: grid;
+
             grid-template-columns: repeat(3, 1fr); /* 横に3個均等に並べる */
+
             gap: 15px;                            /* 画像と画像のすき間 */
+
             max-width: 1080px;                     /* 全体の最大幅 */
+
             width: 100%;
+
             padding: 20px;
+
             box-sizing: border-box;
+
         }
+
+
 
         /* 3×3マスの画像枠の初期状態 */
+
         .grid-item {
+
             overflow: hidden;
+
             border-radius: 8px;
+
             background-color: #fff;
+
             opacity: 0;
+
             transform: translateY(30px);
+
         }
+
+
 
         /* 3×3マスが画面に入ったらアニメーション開始 */
+
         .grid-container.is-show .grid-item {
+
             animation: fadeInUp 0.6s ease-out forwards;
+
         }
+
+
 
         /* 3×3マスの時間差（ディレイ）設定 */
+
         .grid-container.is-show .grid-item:nth-child(1) { animation-delay: 0.2s; }
+
         .grid-container.is-show .grid-item:nth-child(2) { animation-delay: 0.3s; }
+
         .grid-container.is-show .grid-item:nth-child(3) { animation-delay: 0.4s; }
+
         .grid-container.is-show .grid-item:nth-child(4) { animation-delay: 0.5s; }
+
         .grid-container.is-show .grid-item:nth-child(5) { animation-delay: 0.6s; }
+
         .grid-container.is-show .grid-item:nth-child(6) { animation-delay: 0.7s; }
+
         .grid-container.is-show .grid-item:nth-child(7) { animation-delay: 0.8s; }
+
         .grid-container.is-show .grid-item:nth-child(8) { animation-delay: 0.9s; }
+
         .grid-container.is-show .grid-item:nth-child(9) { animation-delay: 1.0s; }
 
+
+
         /* フワッと上がって表示されるアニメーションの定義 */
+
         @keyframes fadeInUp {
+
             0% {
+
                 opacity: 0;
+
                 transform: translateY(30px);
+
             }
+
             100% {
+
                 opacity: 1;
+
                 transform: translateY(0);
+
             }
+
         }
+
+
 
         /* 縦並びのすべての画像の初期状態（透明で少し下にある） */
+
         .fade-in-single {
+
             opacity: 0;
+
             transform: translateY(30px);
+
             transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+
         }
+
         /* スクロールして画面に入ったら表示 */
+
         .fade-in-single.is-show {
+
             opacity: 1;
+
             transform: translateY(0);
+
         }
+
+
 
         /* 3×3の画像自体の設定 */
+
         .grid-item img {
+
             width: 100%;
+
             height: 100%;
+
             object-fit: cover;
+
             display: block;
+
         }
+
         
-        /* 💡 追加：3x3の1枚目をリンクにするため、マウスが乗ったら指マークにする設定 */
-        .grid-item a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        
+
         /* 縦並びの画像の設定（幅を100%に均一化、縦のすき間を綺麗にする） */
+
         .wd1080 img {
+
             width: 100%;
+
             display: block;
+
         }
+
+
 
         /* カルーセル（スライダー）のCSS設定 */
+
         .carousel-section {
+
             width: 100%;
+
             max-width: 1080px;
+
             position: relative;
+
             overflow: hidden; /* はみ出た画像を隠す */
+
             margin-bottom: 16px;
-            /* 💡 追加：スクロールして止まった時に、画像の上がカツカツにならないよう少し隙間を空ける設定 */
-            scroll-margin-top: 20px;
+
         }
+
+
 
         .carousel-track {
+
             display: flex;
+
             width: 100%;
+
         }
+
+
 
         .carousel-slide {
+
             min-width: 100%; /* 枠内に1枚ぴったり収める */
+
             box-sizing: border-box;
+
         }
+
         
+
     </style>
+
 </head>
+
 <body>
 
+
+
 <ul class="wd1080" style="position:relative;">
+
     <li class="wd1080" style="position:relative;">
+
         <img src="HT_20260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
         <img src="HT_20260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
     </li>
+
+
 
     <li>
+
         <div class="grid-container" id="scroll-grid">
-            <div class="grid-item">
-                <a href="#target-carousel-1">
-                    <img src="HT_20260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん">
-                </a>
-            </div>
+
+            <div class="grid-item"><img src="HT_20260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_05.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_06.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_07.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_08.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             <div class="grid-item"><img src="HT_20260617_3_09.jpg" alt="HeartTattoo,瀬川陽cache_09,ひなぽん"></div>
+
         </div>
+
     </li>
 
+
+
     <li class="wd1080" style="position:relative;">
+
         <img src="HT_20260617_4.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
         <img src="oHT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
         
-        <div class="carousel-section fade-in-single" id="target-carousel-1">
-            <div class="carousel-track">
-                <div class="carousel-slide"><img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-                <div class="carousel-slide"><img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-                <div class="carousel-slide"><img src="HT_20260617_6_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-            </div>
-        </div>
-        <img src="oHT_20260617_6_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>          
-        <a href="https://zozo.jp/shop/emmaclothes/goods/97578567/"><img src="HT_20260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>    
-        <img src="HT_20260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <img src="HT_20260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <img src="oHT_20260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>   
-        <img src="HT_20260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>  
 
         <div class="carousel-section fade-in-single">
+
             <div class="carousel-track">
-                <div class="carousel-slide"><img src="HT_20260617_12_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-                <div class="carousel-slide"><img src="HT_20260617_12_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
-                <div class="carousel-slide"><img src="HT_20260617_12_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+                <div class="carousel-slide"><img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+                <div class="carousel-slide"><img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+                <div class="carousel-slide"><img src="HT_20260617_6_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
             </div>
+
+        </div>
+
+        <img src="oHT_20260617_6_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>          
+
+        <a href="https://zozo.jp/shop/emmaclothes/goods/97578567/"><img src="HT_20260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>    
+
+        <img src="HT_20260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
+        <img src="HT_20260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
+        <img src="oHT_20260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>   
+
+        <img src="HT_20260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>  
+
+
+
+        <div class="carousel-section fade-in-single">
+
+            <div class="carousel-track">
+
+                <div class="carousel-slide"><img src="HT_20260617_12_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+                <div class="carousel-slide"><img src="HT_20260617_12_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+                <div class="carousel-slide"><img src="HT_20260617_12_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+
+            </div>
+
         </div>        
+
         
+
         <img src="oHT_20260617_12_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>        
+
         <img src="oHT_20260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
         <img src="oHT_20260617_14.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+
         <a href="https://zozo.jp/brand/hearttattoo/"><img src="oHT_20260617_15.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>    
+
     </li>    
+
 </ul>
 
+
+
 <script>
+
     // --- ① スクロール監視の処理 ---
+
     const gridContainer = document.getElementById('scroll-grid');
+
     const singleImages = document.querySelectorAll('.fade-in-single');
 
+
+
     const options = {
+
         root: null,
+
         rootMargin: "0px",
+
         threshold: 0.1
+
     };
 
+
+
     const observer = new IntersectionObserver((entries) => {
+
         entries.forEach(entry => {
+
             if (entry.isIntersecting) {
+
                 entry.target.classList.add('is-show');
+
                 observer.unobserve(entry.target);
+
             }
+
         });
+
     }, options);
 
+
+
     if (gridContainer) observer.observe(gridContainer);
+
     singleImages.forEach(image => {
+
         observer.observe(image);
+
     });
 
-    // --- ② 複数のカルーセルを一括で無限ループ自動再生させる処理 ---
+
+
+    // --- ② 💡 複数のカルーセルを一括で無限ループ自動再生させる処理 ---
+
     const carousels = document.querySelectorAll('.carousel-section');
 
+
+
     carousels.forEach(carousel => {
+
         const track = carousel.querySelector('.carousel-track');
+
         const slides = track.querySelectorAll('.carousel-slide');
+
         const originalTotal = slides.length; // 元の枚数（3枚）
 
+
+
         // トリック用の4枚目（1枚目のコピー）をJavaScriptで自動追加
+
         const cloneSlide = slides[0].cloneNode(true);
+
         track.appendChild(cloneSlide);
+
+
 
         let currentSlide = 0;
 
+
+
         function moveSlide() {
+
             currentSlide++;
+
             
+
             // なめらかに移動（0.6秒）
+
             track.style.transition = "transform 0.6s ease-in-out";
+
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
+
+
             // コピーの4枚目に到達した時のワープ処理
+
             if (currentSlide === originalTotal) {
+
                 setTimeout(() => {
+
                     track.style.transition = "none";
+
                     currentSlide = 0;
+
                     track.style.transform = `translateX(0%)`;
+
                 }, 600); // 0.6秒後
+
             }
+
         }
 
+
+
         // それぞれのカルーセルで独立して2秒ごとに実行
+
         setInterval(moveSlide, 2000);
+
     });
+
 </script>
+
     
+
 </body>
+
 </html>
