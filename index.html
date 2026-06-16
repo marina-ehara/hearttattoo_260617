@@ -110,7 +110,6 @@
         .carousel-track {
             display: flex;
             width: 100%;
-            /* 💡 transitionはJavaScript側でコントロールするためここからは消去しました */
         }
 
         .carousel-slide {
@@ -147,7 +146,7 @@
         <img src="HT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         
         <div class="carousel-section fade-in-single">
-            <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-track">
                 <div class="carousel-slide"><img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
                 <div class="carousel-slide"><img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
                 <div class="carousel-slide"><img src="HT_20260617_6_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
@@ -161,7 +160,7 @@
         <img src="HT_20260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>  
 
         <div class="carousel-section fade-in-single">
-            <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-track">
                 <div class="carousel-slide"><img src="HT_20260617_12_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
                 <div class="carousel-slide"><img src="HT_20260617_12_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
                 <div class="carousel-slide"><img src="HT_20260617_12_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
@@ -176,7 +175,7 @@
 </ul>
 
 <script>
-    // --- スクロール監視の処理 ---
+    // --- ① スクロール監視の処理 ---
     const gridContainer = document.getElementById('scroll-grid');
     const singleImages = document.querySelectorAll('.fade-in-single');
 
@@ -200,36 +199,40 @@
         observer.observe(image);
     });
 
-    // --- 💡 変更：永遠に右から左へループするカルーセル処理 ---
-    let currentSlide = 0;
-    const track = document.getElementById('carouselTrack');
-    const slides = document.querySelectorAll('.carousel-slide');
-    
-    // クローン（4枚目）を含めた合計枚数ではなく、「本来の枚数（3枚）」を基準にする
-    const originalTotal = slides.length - 1; 
+    // --- ② 💡 複数のカルーセルを一括で無限ループ自動再生させる処理 ---
+    const carousels = document.querySelectorAll('.carousel-section');
 
-    function autoMoveSlide() {
-        currentSlide++; // 次のスライド（右）へ進む
-        
-        // 1. まずはなめらかに移動させる（0.6秒かけてスライド）
-        track.style.transition = "transform 0.6s ease-in-out";
-        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    carousels.forEach(carousel => {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = track.querySelectorAll('.carousel-slide');
+        const originalTotal = slides.length; // 元の枚数（3枚）
 
-        // 2. もし動いた先が「身代わりの4枚目（本物の1枚目と同じ）」だった場合の特殊処理
-        if (currentSlide === originalTotal) {
-            // スライドのアニメーション（0.6秒）が終わるのを待ってから実行
-            setTimeout(() => {
-                // アニメーションを一時的にOFF（0秒）にする
-                track.style.transition = "none";
-                currentSlide = 0; // 本物の1枚目のインデックスに戻す
-                // ユーザーに気づかれないスピードで最初の位置に瞬間ワープ！
-                track.style.transform = `translateX(0%)`;
-            }, 600); // 0.6秒（600ミリ秒）
+        // トリック用の4枚目（1枚目のコピー）をJavaScriptで自動追加
+        const cloneSlide = slides[0].cloneNode(true);
+        track.appendChild(cloneSlide);
+
+        let currentSlide = 0;
+
+        function moveSlide() {
+            currentSlide++;
+            
+            // なめらかに移動（0.6秒）
+            track.style.transition = "transform 0.6s ease-in-out";
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // コピーの4枚目に到達した時のワープ処理
+            if (currentSlide === originalTotal) {
+                setTimeout(() => {
+                    track.style.transition = "none";
+                    currentSlide = 0;
+                    track.style.transform = `translateX(0%)`;
+                }, 600); // 0.6秒後
+            }
         }
-    }
 
-    // 2秒（2000ミリ秒）ごとに実行
-    setInterval(autoMoveSlide, 2000);
+        // それぞれのカルーセルで独立して2秒ごとに実行
+        setInterval(moveSlide, 2000);
+    });
 </script>
     
 </body>
