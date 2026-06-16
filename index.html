@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>HeartTattoo meets 瀬川陽菜乃</title>
     <style>
-        /* 💡 追加：ページ内のスクロールをすべて柔らかく（スムーズに）する設定 */
+        /* 💡 ページ内のスクロールをすべて柔らかく（スムーズに）する設定 */
         html {
             scroll-behavior: smooth;
         }
@@ -97,7 +97,7 @@
             display: block;
         }
         
-        /* 💡 追加：3x3の1枚目をリンクにするため、マウスが乗ったら指マークにする設定 */
+        /* 3x3内のリンク（1枚目など）にマウスが乗ったら指マークにする設定 */
         .grid-item a {
             display: block;
             width: 100%;
@@ -118,7 +118,7 @@
             position: relative;
             overflow: hidden; /* はみ出た画像を隠す */
             margin-bottom: 16px;
-            /* 💡 追加：スクロールして止まった時に、画像の上がカツカツにならないよう少し隙間を空ける設定 */
+            /* 💡 スクロールして止まった時に、画像の上が見切れないように少し隙間を空ける設定 */
             scroll-margin-top: 20px;
         }
 
@@ -164,14 +164,11 @@
         <img src="HT_20260617_4.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <a href="https://zozo.jp/search/?p_gtagid=2428079"><img src="oHT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>
         
-        <div class="carousel-section fade-in-single">
+        <div class="carousel-section fade-in-single" id="target-carousel-1">
             <div class="carousel-track">
-                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123">
-                    <img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div>
-                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123">
-                    <img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div>
-                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123">
-                    <img src="HT_20260617_6_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div></a>
+                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123"><img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div>
+                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123"><img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div>
+                <div class="carousel-slide"><a href="https://zozo.jp/search/?p_gtagid=2428123"><img src="HT_20260617_6_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a></div>
             </div>
         </div>
         <img src="oHT_20260617_6_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>          
@@ -191,72 +188,11 @@
         
         <img src="oHT_20260617_12_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>        
         <img src="oHT_20260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <img src="oHT_20260617_14.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single">
-        <a href="https://zozo.jp/brand/hearttattoo/"><img src="oHT_20260617_15.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a> 
+        <img src="oHT_20260617_14.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+        <a href="https://zozo.jp/brand/hearttattoo/"><img src="oHT_20260617_15.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br> 
         <a href="https://www.instagram.com/hearttattoo_official/"><img src="oHT_20260617_16.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br> 
     </li>    
 </ul>
 
 <script>
-    // --- スクロール監視の処理 ---
-    const gridContainer = document.getElementById('scroll-grid');
-    const singleImages = document.querySelectorAll('.fade-in-single');
-
-    const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-show');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, options);
-
-    if (gridContainer) observer.observe(gridContainer);
-    singleImages.forEach(image => {
-        observer.observe(image);
-    });
-
-    // --- 無限ループ自動再生させる処理 ---
-    const carousels = document.querySelectorAll('.carousel-section');
-
-    carousels.forEach(carousel => {
-        const track = carousel.querySelector('.carousel-track');
-        const slides = track.querySelectorAll('.carousel-slide');
-        const originalTotal = slides.length; // 元の枚数（3枚）
-
-        // トリック用の4枚目（1枚目のコピー）をJavaScriptで自動追加
-        const cloneSlide = slides[0].cloneNode(true);
-        track.appendChild(cloneSlide);
-
-        let currentSlide = 0;
-
-        function moveSlide() {
-            currentSlide++;
-            
-            // なめらかに移動（0.6秒）
-            track.style.transition = "transform 0.6s ease-in-out";
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-            // コピーの4枚目に到達した時のワープ処理
-            if (currentSlide === originalTotal) {
-                setTimeout(() => {
-                    track.style.transition = "none";
-                    currentSlide = 0;
-                    track.style.transform = `translateX(0%)`;
-                }, 600); // 0.6秒後
-            }
-        }
-
-        // それぞれのカルーセルで独立して2秒ごとに実行
-        setInterval(moveSlide, 2000);
-    });
-</script>
-    
-</body>
-</html>
+    //
