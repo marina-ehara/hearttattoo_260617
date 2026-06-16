@@ -72,7 +72,7 @@
             }
         }
 
-        /* 💡 縦並びのすべての画像の初期状態（透明で少し下にある） */
+        /* 縦並びのすべての画像の初期状態（透明で少し下にある） */
         .fade-in-single {
             opacity: 0;
             transform: translateY(30px);
@@ -97,13 +97,60 @@
             width: 100%;
             display: block;
         }
+
+        /* 💡 新設：カルーセル（スライダー）のCSS設定 */
+        .carousel-section {
+            width: 100%;
+            max-width: 1080px;
+            position: relative;
+            overflow: hidden; /* はみ出た画像を隠す */
+            margin-bottom: 16px;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s ease-in-out; /* スライドスピード */
+        }
+
+        .carousel-slide {
+            min-width: 100%; /* 枠内に1枚ぴったり収める */
+            box-sizing: border-box;
+        }
+
+        /* カルーセルの左右ボタン */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            transition: background 0.2s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .carousel-btn.prev { left: 15px; }
+        .carousel-btn.next { right: 15px; }
         
     </style>
 </head>
 <body>
 
 <ul class="wd1080" style="position:relative;">
-    <!-- 💡 上の2枚の画像もスクロールで表示されるようにしました -->
     <li class="wd1080" style="position:relative;">
         <img src="HT_260617_1.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <img src="HT_260617_2.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
@@ -126,7 +173,16 @@
     <li class="wd1080" style="position:relative;">
         <img src="HT_260617_４.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+        
+        <div class="carousel-section fade-in-single">
+            <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+                <div class="carousel-slide"><img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+                <div class="carousel-slide"><img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            </div>
+            <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
         
         <img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>    
         <img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
@@ -140,33 +196,47 @@
 </ul>
 
 <script>
-    // 3×3のコンテナを取得
+    // --- スクロール監視の処理 ---
     const gridContainer = document.getElementById('scroll-grid');
-    // すべての単体画像を取得
     const singleImages = document.querySelectorAll('.fade-in-single');
 
     const options = {
         root: null,
         rootMargin: "0px",
-        threshold: 0.1 /* 画像が10%画面に入ったら表示 */
+        threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-show');
-                observer.unobserve(entry.target); // 表示されたら監視を終了
+                observer.unobserve(entry.target);
             }
         });
     }, options);
 
-    // 3×3のグリッドを監視
     if (gridContainer) observer.observe(gridContainer);
-    
-    // すべての縦並び画像を1枚ずつ監視対象に登録
     singleImages.forEach(image => {
         observer.observe(image);
     });
+
+    // --- 💡 追加：カルーセルのスライド制御処理 ---
+    let currentSlide = 0;
+    const track = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+
+    function moveSlide(direction) {
+        currentSlide += direction;
+        
+        if (currentSlide < 0) {
+            currentSlide = totalSlides - 1; // 最初の枚数より前なら最後の枚数へ
+        } else if (currentSlide >= totalSlides) {
+            currentSlide = 0; // 最後の枚数より後ろなら最初の枚数へ
+        }
+        
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
 </script>
     
 </body>
