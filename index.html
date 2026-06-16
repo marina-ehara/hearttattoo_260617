@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>HeartTattoo meets 瀬川陽菜乃</title>
     <style>
+        /* 💡 追加：ページ内のスクロールをすべて柔らかく（スムーズに）する設定 */
+        html {
+            scroll-behavior: smooth;
+        }
+
         .text {
             font-size: 20px;
             transition: all 0.5s; /* 変化をなめらかにする設定 */
@@ -92,6 +97,14 @@
             display: block;
         }
         
+        /* 💡 追加：3x3の1枚目をリンクにするため、マウスが乗ったら指マークにする設定 */
+        .grid-item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
         /* 縦並びの画像の設定（幅を100%に均一化、縦のすき間を綺麗にする） */
         .wd1080 img {
             width: 100%;
@@ -105,6 +118,8 @@
             position: relative;
             overflow: hidden; /* はみ出た画像を隠す */
             margin-bottom: 16px;
+            /* 💡 追加：スクロールして止まった時に、画像の上がカツカツにならないよう少し隙間を空ける設定 */
+            scroll-margin-top: 20px;
         }
 
         .carousel-track {
@@ -129,7 +144,11 @@
 
     <li>
         <div class="grid-container" id="scroll-grid">
-            <div class="grid-item"><img src="HT_20260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
+            <div class="grid-item">
+                <a href="#target-carousel-1">
+                    <img src="HT_20260617_3_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん">
+                </a>
+            </div>
             <div class="grid-item"><img src="HT_20260617_3_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
             <div class="grid-item"><img src="HT_20260617_3_03.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
             <div class="grid-item"><img src="HT_20260617_3_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
@@ -145,7 +164,7 @@
         <img src="HT_20260617_4.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <img src="oHT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         
-        <div class="carousel-section fade-in-single">
+        <div class="carousel-section fade-in-single" id="target-carousel-1">
             <div class="carousel-track">
                 <div class="carousel-slide"><img src="HT_20260617_6_01.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
                 <div class="carousel-slide"><img src="HT_20260617_6_02.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></div>
@@ -199,7 +218,7 @@
         observer.observe(image);
     });
 
-    // --- ② 💡 複数のカルーセルを一括で無限ループ自動再生させる処理 ---
+    // --- ② 複数のカルーセルを一括で無限ループ自動再生させる処理 ---
     const carousels = document.querySelectorAll('.carousel-section');
 
     carousels.forEach(carousel => {
