@@ -72,7 +72,7 @@
             }
         }
 
-        /* 各画像ふわっと表示 */
+        /* 💡 単体画像（5〜10番などの画像）の初期状態とアニメーション設定 */
         .fade-in-single {
             opacity: 0;
             transform: translateY(30px);
@@ -125,24 +125,26 @@
     <li class="wd1080" style="position:relative;">
         <img src="HT_260617_４.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         
-        <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single" id="scroll-single"><br><br>
+        <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         
         <img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
-        <img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>    
-        <img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
-        <img src="HT_260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
-        <img src="HT_260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>   
-        <img src="HT_260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;><br><br>     
-        <img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br> 
+        
+        <img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>    
+        <img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+        <img src="HT_260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+        <img src="HT_260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>   
+        <img src="HT_260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>     
+        <img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         <img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         <img src="HT_260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>    
     </li>    
 </ul>
 
 <script>
-    // 💡 3×3のコンテナと、5番目の画像の両方をJavaScriptに読み込みます
+    // 3×3のコンテナを取得
     const gridContainer = document.getElementById('scroll-grid');
-    const singleImage = document.getElementById('scroll-single');
+    // 💡 class="fade-in-single" がついた画像をまとめて全部取得
+    const singleImages = document.querySelectorAll('.fade-in-single');
 
     const options = {
         root: null,
@@ -159,11 +161,13 @@
         });
     }, options);
 
-    // 💡 3×3のグリッドと、5番目の画像の両方をそれぞれ監視対象に登録します
-    observer.observe(gridContainer);
-    if (singleImage) {
-        observer.observe(singleImage);
-    }
+    // 3×3のグリッドを監視
+    if (gridContainer) observer.observe(gridContainer);
+    
+    // 💡 まとめて取得した画像を1枚ずつループしてすべて監視対象に登録
+    singleImages.forEach(image => {
+        observer.observe(image);
+    });
 </script>
     
 </body>
