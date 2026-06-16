@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScriptアニメーションの例</title>
+    <title>HeartTattoo meets 瀬川陽菜乃</title>
     <style>
         .text {
             font-size: 20px;
@@ -72,6 +72,18 @@
             }
         }
 
+        /* 💡 追加：単体画像（5番目の画像）の初期状態とアニメーション設定 */
+        .fade-in-single {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        /* スクロールして画面に入ったら表示 */
+        .fade-in-single.is-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* 画像自体の設定 */
         .grid-item img {
             width: 100%;
@@ -112,7 +124,9 @@
 
     <li class="wd1080" style="position:relative;">
         <img src="HT_260617_４.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
-        <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
+        
+        <img src="HT_260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single" id="scroll-single"><br><br>
+        
         <img src="HT_260617_3.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         <img src="HT_260617_6.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>    
         <img src="HT_260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
@@ -122,27 +136,34 @@
         <img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         <img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>
         <img src="HT_260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDownsmall;"><br><br>    
-    </li>   
+    </li>    
 </ul>
 
 <script>
+    // 💡 3×3のコンテナと、5番目の画像の両方をJavaScriptに読み込みます
     const gridContainer = document.getElementById('scroll-grid');
+    const singleImage = document.getElementById('scroll-single');
+
     const options = {
         root: null,
         rootMargin: "0px",
-        threshold: 0.1 /* 3x3エリアが10%見えたら動き出す設定 */
+        threshold: 0.1 /* 10%見えたら動き出す設定 */
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                gridContainer.classList.add('is-show');
-                observer.unobserve(entry.target); // 1回動いたら監視を終了
+                entry.target.classList.add('is-show');
+                observer.unobserve(entry.target); // 1回動いたらその要素の監視を終了
             }
         });
     }, options);
 
+    // 💡 3×3のグリッドと、5番目の画像の両方をそれぞれ監視対象に登録します
     observer.observe(gridContainer);
+    if (singleImage) {
+        observer.observe(singleImage);
+    }
 </script>
     
 </body>
