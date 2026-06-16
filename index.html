@@ -160,4 +160,55 @@
         <img src="HT_260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>   
         <img src="HT_260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>     
         <img src="HT_260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃
+        <img src="HT_260617_12.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
+        <img src="HT_260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>    
+    </li>    
+</ul>
+
+<script>
+    // --- スクロール監視の処理 ---
+    const gridContainer = document.getElementById('scroll-grid');
+    const singleImages = document.querySelectorAll('.fade-in-single');
+
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    if (gridContainer) observer.observe(gridContainer);
+    singleImages.forEach(image => {
+        observer.observe(image);
+    });
+
+    // --- 💡 変更：2秒ごとに自動で切り替わる自動再生の処理 ---
+    let currentSlide = 0;
+    const track = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+
+    function autoMoveSlide() {
+        currentSlide++; // 次のスライドへ進む
+        
+        if (currentSlide >= totalSlides) {
+            currentSlide = 0; // 最後の枚数を超えたら最初の枚数に戻る
+        }
+        
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // 💡 setIntervalを使って「2000ミリ秒（2秒）」ごとに上記の関数を実行します
+    setInterval(autoMoveSlide, 2000);
+</script>
+    
+</body>
+</html>
