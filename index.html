@@ -81,7 +81,10 @@
         .fade-in-single {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 1.0s ease-out, transform 1.0s ease-out;
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+            /* 💡 Safari・スマホ対策：ブラウザのバグを防ぎ、アニメーションを滑らかにする呪文 */
+            will-change: opacity, transform;
+            backface-visibility: hidden;
         }
         /* スクロールして画面に入ったら表示 */
         .fade-in-single.is-show {
@@ -106,7 +109,7 @@
         }
         
         /* 縦並びの画像の設定（幅を100%に均一化、縦のすき間を綺麗にする） */
-        .wd1080 img {
+        .wd1080 img, .fade-in-single img {
             width: 100%;
             display: block;
         }
@@ -131,7 +134,6 @@
             box-sizing: border-box;
         }
 
-        /* 💡 追加：カルーセル内のリンク付き画像が横いっぱいに正しく表示されるように設定 */
         .carousel-slide a {
             display: block;
             width: 100%;
@@ -167,7 +169,9 @@
 
     <li class="wd1080" style="position:relative;">
         <img src="HT_20260617_4.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <a href="https://zozo.jp/search/?p_gtagid=2428079"><img src="oHT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>
+        
+        <!-- 💡 ブラウザ対策：リンク(aタグ)自体に fade-in-single クラスを持たせて丸ごと包みました -->
+        <a href="https://zozo.jp/search/?p_gtagid=2428079" class="fade-in-single" style="display:block;"><img src="oHT_20260617_5.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a><br><br>
         
         <!-- 1つ目のカルーセル -->
         <div class="carousel-section fade-in-single" id="target-carousel-1">
@@ -178,11 +182,11 @@
             </div>
         </div>
         <img src="oHT_20260617_6_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>          
-        <a href="https://zozo.jp/shop/emmaclothes/goods/97578567/"><img src="HT_20260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>    
-        <a href="https://zozo.jp/search/?p_gtagid=2428127"><img src="oHT_20260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>
+        <a href="https://zozo.jp/shop/emmaclothes/goods/97578567传输/" class="fade-in-single" style="display:block;"><img src="HT_20260617_7.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a><br><br>    
+        <img src="oHT_20260617_8.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <img src="oHT_20260617_9.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <a href="https://zozo.jp/search/?p_gtagid=2428131"><img src="oHT_20260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>   
-        <a href="https://zozo.jp/search/?p_gtagid=2428131"><img src="HT_20260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br>  
+        <img src="oHT_20260617_10.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>   
+        <img src="HT_20260617_11.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>  
 
         <!-- 2つ目のカルーセル -->
         <div class="carousel-section fade-in-single">
@@ -196,8 +200,8 @@
         <img src="oHT_20260617_12_04.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>        
         <img src="oHT_20260617_13.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
         <img src="oHT_20260617_14.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"><br><br>
-        <a href="https://zozo.jp/brand/hearttattoo/"><img src="oHT_20260617_15.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br> 
-        <a href="https://www.instagram.com/hearttattoo_official/"><img src="oHT_20260617_16.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん" class="fade-in-single"></a><br><br> 
+        <a href="https://zozo.jp/brand/hearttattoo/" class="fade-in-single" style="display:block;"><img src="oHT_20260617_15.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a><br><br> 
+        <a href="https://www.instagram.com/hearttattoo_official/" class="fade-in-single" style="display:block;"><img src="oHT_20260617_16.jpg" alt="HeartTattoo,瀬川陽菜乃,ひなぽん"></a><br><br> 
     </li>    
 </ul>
 
@@ -209,7 +213,7 @@
     const options = {
         root: null,
         rootMargin: "0px",
-        threshold: 0.2
+        threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -234,7 +238,7 @@
         const slides = track.querySelectorAll('.carousel-slide');
         const originalTotal = slides.length; // 元の枚数（3枚）
 
-        // 💡 修正：リンク（aタグ）の有無に関わらず、1枚目を完璧に丸ごとコピーして末尾に追加する処理
+        // リンク（aタグ）の有無に関わらず、1枚目を完璧に丸ごとコピーして末尾に追加する処理
         const cloneSlide = slides[0].cloneNode(true);
         track.appendChild(cloneSlide);
 
